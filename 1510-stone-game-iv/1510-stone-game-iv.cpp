@@ -1,17 +1,16 @@
 class Solution {
 public:
-    vector<int> dp;
-    bool help(int n){
-        if(n<=0) return false;
-        if(dp[n]!=-1) return dp[n];
-        for(int i=1;i*i<=n;i++){
-            if(!help(n-(i*i))) return dp[n]=1; 
-        }
-        return dp[n]=0;
-    }
-    
     bool winnerSquareGame(int n) {
-        dp.resize(n+1,-1);
-        return help(n);
+        vector<bool> dp(n+1);
+        dp[0]=false;
+        for(int i=1;i<=n;i++){
+            int x=1;
+            while(x*x<=i){
+                if(!dp[i-(x*x)])
+                    dp[i]=true;
+                x++;
+            }
+        }
+        return dp[n];
     }
 };
