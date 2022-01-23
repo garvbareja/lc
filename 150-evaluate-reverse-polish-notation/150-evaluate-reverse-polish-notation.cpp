@@ -6,8 +6,10 @@ public:
     }
     
     int todigit(string& s){
-        int ret=0;bool flag=false;
-        int i=0; if(s[i]=='-'){
+        int ret=0;
+        bool flag=false;
+        int i=0;
+        if(s[i]=='-'){
             flag=true;
             i++;
         }
