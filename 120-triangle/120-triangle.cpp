@@ -1,15 +1,16 @@
 class Solution {
 public:
-    vector<vector<int>> dp;
-    int help(vector<vector<int>>& nums,int i,int j){
-        if(i>=nums.size() || j>=nums[i].size()) return INT_MAX/10;
-        if(i==nums.size()-1) return nums[i][j];
-        if(dp[i][j]!=-1) return dp[i][j];
-        return dp[i][j]=nums[i][j]+min(help(nums,i+1,j),help(nums,i+1,j+1));
-    }
-    
-    int minimumTotal(vector<vector<int>>& nums){
-        dp.resize(nums[nums.size()-1].size(),vector<int>(nums[nums.size()-1].size(),-1));
-        return help(nums,0,0);
+    int minimumTotal(vector<vector<int>>& triangle) {
+        vector<int> prev = triangle[0];
+        for(int i=1;i<triangle.size();i++){
+            vector<int> cur = triangle[i];
+            for(int j=0;j<cur.size();j++){
+                if(j==cur.size()-1){cur[j]+=prev[j-1]; continue;}
+                cur[j]+=min(prev[max(0,j-1)],prev[j]);
+            }
+            prev=cur;
+            for(auto num:prev) cout<<num<<" ";
+        }
+        return *min_element(prev.begin(),prev.end());
     }
 };
