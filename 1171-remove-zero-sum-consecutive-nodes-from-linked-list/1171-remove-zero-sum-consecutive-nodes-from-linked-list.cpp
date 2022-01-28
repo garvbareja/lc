@@ -18,15 +18,13 @@ public:
         while(head){
             sum+=head->val;
             if(hash.count(sum)){
-                ListNode* prev = hash[sum];
-                ListNode* temp = prev->next;
-                prev->next=head->next;
-                int temp_sum=sum;
+                ListNode* temp = hash[sum]->next;
+                hash[sum]->next=head->next;
                 while(temp!=head){
-                    temp_sum+=temp->val;
-                    hash.erase(temp_sum);
+                    sum+=temp->val;
+                    hash.erase(sum);
                     temp=temp->next;
-                }
+                }sum+=head->val;
             }else hash[sum]=head;
             head=head->next;
         }
