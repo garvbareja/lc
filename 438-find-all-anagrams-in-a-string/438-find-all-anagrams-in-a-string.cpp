@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<int> findAnagrams(string s, string p) {
+    vector<int> findAnagrams(string& s, string& p) {
         vector<int> ans,hash(26); int count=0;
         for(int i=0;i<p.length();i++){
             if(!hash[p[i]-'a']) count++;
