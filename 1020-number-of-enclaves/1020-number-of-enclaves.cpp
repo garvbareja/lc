@@ -10,7 +10,6 @@ public:
     }
     
     void dfs(vector<vector<int>>& nums,int i,int j){
-        if(!valid(nums,i,j)) return;
         nums[i][j]=2;
         for(int z=0;z<4;z++){
             int a=i+x[z],b=j+y[z];
