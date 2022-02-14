@@ -13,14 +13,12 @@ class Solution {
 public:
     void dfs(TreeNode* root){
         if(!root) return;
-        TreeNode* temp=root->right;
-        root->right=root->left;
-        root->left=temp;
+        swap(root->left,root->right);
         dfs(root->left);
         dfs(root->right);
     }
+    
     TreeNode* invertTree(TreeNode* root) {
-        if(!root) return nullptr;
         dfs(root);
         return root;
     }
