@@ -4,13 +4,15 @@ public:
         if(graph.size()==1) return 0;
         string allvisit(graph.size(),'1');
         queue<pair<int,string>> q;
+        string cur(graph.size(),'0');
         set<pair<int,string>> vis;
         for(int i=0;i<graph.size();i++){
-            string temp(graph.size(),'0'); temp[i]='1';
-            q.push({i,temp}); vis.insert({i,temp});
+            cur[i]='1';
+            q.push({i,cur}); vis.insert({i,cur});
+            cur[i]='0';
         }
         
-        int step=0,v; string cur; char tempchr;
+        int step=0,v; char tempchr;
         while(!q.empty()){
             int size=q.size();
             while(size--){
