@@ -20,15 +20,22 @@ public:
 
 class Solution {
 public:
-    vector<int> ans;
-    void dfs(Node* root){
-        ans.push_back(root->val);
-        for(int i=0;i<root->children.size();i++) dfs(root->children[i]);
-    }
-    
     vector<int> preorder(Node* root) {
         if(!root) return {};
-        dfs(root);
+        stack<Node*> s; vector<int> ans;
+        while(root || !s.empty()){
+            if(root){
+                ans.push_back(root->val);
+                if(root->children.size()==0) root=nullptr;
+                else{
+                    for(int i=root->children.size()-1;i>0;i--) s.push(root->children[i]);
+                    root=root->children[0];
+                }
+            }else{
+                root=s.top();
+                s.pop();
+            }
+        }
         return ans;
     }
 };
