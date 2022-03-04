@@ -1,12 +1,13 @@
 class Solution {
 public:
+            vector<int> x={-1,1,0,0};
+        vector<int> y={0,0,1,-1};
+
     bool dfs(vector<vector<int>>& m,vector<vector<int>>& n,int i,int j){
         if(i<0 || i>=m.size() || j<0 || j>=m[0].size() || !n[i][j]) return true;
         bool flag = true;
         if(!m[i][j]) flag=false;
         n[i][j]=0;
-        vector<int> x={-1,1,0,0};
-        vector<int> y={0,0,1,-1};
         for(int z=0;z<4;z++){
             if(!dfs(m,n,i+x[z],j+y[z])) flag=false;
         }
