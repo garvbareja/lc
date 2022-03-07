@@ -11,20 +11,20 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode* sentinal = new ListNode(-101);
-        ListNode* prev=sentinal;
+        ListNode* sentinal=new ListNode(-1,list1);
+        ListNode* prev= sentinal;
         while(list1 || list2){
             if(list1 && list2){
                 if(list1->val<list2->val){
-                    prev->next = list1;
-                    prev=list1;
+                    prev->next=list1;
                     list1=list1->next;
                 }else{
                     prev->next=list2;
-                    prev=list2;
                     list2=list2->next;
                 }
-            }else if(list1){
+                prev=prev->next;
+            }
+            else if(list1){
                 prev->next=list1;
                 break;
             }else{
