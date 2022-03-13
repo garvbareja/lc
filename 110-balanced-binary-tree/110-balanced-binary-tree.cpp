@@ -15,15 +15,8 @@ public:
     int dfs(TreeNode* root){
         if(!root) return 0;
         int lh=dfs(root->left);
-        if(lh==-1) return -1;
         int rh=dfs(root->right);
-        if(rh==-1) return -1;
-        if(flag){
-            if(abs(lh-rh)>1){
-                flag=false;
-                return -1;
-            }
-        }else return -1;
+        if(abs(lh-rh)>1) flag=false;
         return 1+max(lh,rh);
     }
     
