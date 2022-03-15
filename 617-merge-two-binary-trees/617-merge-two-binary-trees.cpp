@@ -11,16 +11,16 @@
  */
 class Solution {
 public:
-    TreeNode* help(TreeNode* r1,TreeNode* r2){
-        if(!r1) return r2;
-        if(!r2) return r1;
-        r1->left = help(r1->left,r2->left);
-        r1->right = help(r1->right,r2->right);
-        r1->val+=r2->val;
-        return r1;
+    TreeNode* dfs(TreeNode* p,TreeNode* q){
+        if(!p) return q;
+        if(!q) return p;
+        p->val+=q->val;
+        p->left=dfs(p->left,q->left);
+        p->right=dfs(p->right,q->right);
+        return p;
     }
     
-    TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
-        return help(root1,root2);
+    TreeNode* mergeTrees(TreeNode* p, TreeNode* q) {
+        return dfs(p,q);
     }
 };
