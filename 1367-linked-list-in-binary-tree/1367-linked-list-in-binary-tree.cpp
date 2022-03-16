@@ -24,7 +24,7 @@ public:
     bool dfs(ListNode* head,TreeNode* root){
         if(!head) return true;
         if(!root) return false;
-        return head->val==root->val && (dfs(head->next,root->left) || dfs(head->next,root->right));
+        return head->val==root->val&&(dfs(head->next,root->left)||dfs(head->next,root->right));
     }
     
     bool isSubPath(ListNode* head, TreeNode* root) {
