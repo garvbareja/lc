@@ -12,14 +12,15 @@
 class Solution {
 public:
     int k;
-    long findsecondmin(TreeNode* root){
+    long getmin(TreeNode* root){
         if(!root) return LONG_MAX;
-        if(root->val==k) return min(findsecondmin(root->left),findsecondmin(root->right));
+        if(root->val==k) return min(getmin(root->left),getmin(root->right));
         return root->val;
     }
+    
     int findSecondMinimumValue(TreeNode* root) {
         k=root->val;
-        long res=findsecondmin(root);
+        long res=getmin(root);
         return res==LONG_MAX?-1:res;
     }
 };
