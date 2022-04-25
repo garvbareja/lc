@@ -21,18 +21,24 @@ class PeekingIterator : public Iterator {
 public:
     int next_val=0;
 	PeekingIterator(const vector<int>& nums) : Iterator(nums) {
-	    if(Iterator::hasNext()) next_val=Iterator::next();
+	    // Initialize any member here.
+	    // **DO NOT** save a copy of nums and manipulate it directly.
+	    // You should only use the Iterator interface methods.
+	    next_val=Iterator::next();
 	}
 	
+    // Returns the next element in the iteration without advancing the iterator.
 	int peek() {
         return next_val;
 	}
-    
+	
+	// hasNext() and next() should behave the same as in the Iterator interface.
+	// Override them if needed.
 	int next() {
-        int temp=next_val;
+	    int res=next_val;
         if(Iterator::hasNext()) next_val=Iterator::next();
         else next_val=0;
-        return temp;
+        return res;
 	}
 	
 	bool hasNext() const {
