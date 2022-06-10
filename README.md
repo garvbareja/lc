@@ -1,2 +1,2 @@
 # lc
-Collection of LeetCode questions to ace the coding interview! - Created using [LeetHub](https://github.com/QasimWani/LeetHub)
+Solutions to all the problems i solved on leetcode/gfg
