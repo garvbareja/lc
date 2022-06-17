@@ -1,20 +1,22 @@
 class Solution {
 public:
-    int dfs(vector<int>& coins,int target,int n,vector<vector<int>>& dp){
-        if(!target) return 0;
-        if(dp[n][target]!=-1) return dp[n][target];
-        if(n==1){
-            if(target%coins[0]) return dp[n][target]=INT_MAX-1;
-            else return dp[n][target]=target/coins[0];
-        }
-        if(coins[n-1]>target) return dp[n][target]=dfs(coins,target,n-1,dp);
-        else return dp[n][target]=min(1+dfs(coins,target-coins[n-1],n,dp),dfs(coins,target,n-1,dp));
-    }
+
     
     int coinChange(vector<int>& coins, int amount) {
-        vector<vector<int>> dp(coins.size()+1,vector<int>(amount+1,-1));
-        int ans=dfs(coins,amount,coins.size(),dp);
-        if(ans==INT_MAX-1) return -1;
-        else return ans;
+        vector<vector<int>> dp(coins.size()+1,vector<int>(amount+1));
+        for(int j=0;j<=amount;j++) dp[0][j]=INT_MAX-1;
+        for(int i=0;i<=coins.size();i++) dp[i][0]=0;
+        for(int j=1;j<=amount;j++){
+            if(j%coins[0]) dp[1][j]=INT_MAX-1;
+            else dp[1][j]=j/coins[0];
+        }
+        for(int i=2;i<=coins.size();i++){
+            for(int j=1;j<=amount;j++){
+                dp[i][j]=dp[i-1][j];
+                if(coins[i-1]<=j) dp[i][j]=min(dp[i][j],1+dp[i][j-coins[i-1]]);
+            }
+        }
+        if(dp[coins.size()][amount]==INT_MAX-1) return -1;
+        else return dp[coins.size()][amount];
     }
 };
