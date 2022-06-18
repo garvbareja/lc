@@ -1,15 +1,16 @@
 class Solution {
 public:
     int minDistance(string word1, string word2) {
-        vector<vector<int>> dp(word1.length()+1,vector<int>(word2.length()+1));
-        for(int i=0;i<=word1.length();i++){
-            for(int j=0;j<=word2.length();j++){
-                if(!i) dp[i][j]=j;
-                else if(!j) dp[i][j]=i;
-                else if(word1[i-1]==word2[j-1]) dp[i][j]=dp[i-1][j-1];
-                else dp[i][j]=1+min(min(dp[i-1][j],dp[i][j-1]),dp[i-1][j-1]);
+        vector<int> prev(word2.length()+1),cur(word2.length()+1);
+        for(int i=0;i<=word2.length();i++) prev[i]=i;
+        for(int i=1;i<=word1.length();i++){
+            cur[0]=i;
+            for(int j=1;j<=word2.length();j++){
+                if(word1[i-1]==word2[j-1]) cur[j]=prev[j-1];
+                else cur[j]=1+min(min(prev[j],cur[j-1]),prev[j-1]);
             }
+            prev=cur;
         }
-        return dp[word1.length()][word2.length()];
+        return prev[word2.length()];
     }
 };
