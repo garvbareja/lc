@@ -1,13 +1,14 @@
 class Solution {
 public:
-    int maxProfit(int kk, vector<int>& nums) {
-        vector<vector<vector<int>>> dp(nums.size()+1,vector<vector<int>>(2,vector<int>(kk+1,0)));
-        for(int index=nums.size()-1;index>=0;index--){
-                for(int k=1;k<=kk;k++){
-                    dp[index][1][k]=max(dp[index+1][1][k],-nums[index]+dp[index+1][0][k]);
-                    dp[index][0][k]=max(dp[index+1][0][k],nums[index]+dp[index+1][1][k-1]);
-                }
+    int maxProfit(int k, vector<int>& prices) {
+        vector<int> prev(2*k+1,0),cur(2*k+1,0);
+        for(int index=prices.size()-1;index>=0;index--){
+            for(int transno=2*k-1;transno>=0;transno--){
+                if(!(transno%2)) cur[transno]=max(prev[transno],-prices[index]+prev[transno+1]);
+                else cur[transno]=max(prev[transno],prices[index]+prev[transno+1]);
+            }
+            prev=cur;
         }
-        return dp[0][1][kk];
+        return prev[0];
     }
 };
