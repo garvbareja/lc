@@ -1,11 +1,12 @@
 class Solution {
 public:
     int maxProfit(vector<int>& nums, int fee) {
-        vector<vector<int>>dp (nums.size()+1,vector<int>(2,0));
+        vector<int> after(2); vector<int> cur(2);
         for(int index=nums.size()-1;index>=0;index--){
-            dp[index][1]=max(dp[index+1][1],-nums[index]+dp[index+1][0]);
-            dp[index][0]=max(dp[index+1][0],nums[index]-fee+dp[index+1][1]);
+            cur[1]=max(after[1],-nums[index]+after[0]);
+            cur[0]=max(after[0],nums[index]-fee+after[1]);
+            after=cur;
         }
-        return dp[0][1];
+        return after[1];    
     }
 };
