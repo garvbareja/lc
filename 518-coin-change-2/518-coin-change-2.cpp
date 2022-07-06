@@ -1,13 +1,10 @@
 class Solution {
 public:
-    
-    int change(int amount, vector<int>& coins) {
-        vector<int> cur(amount+1); cur[0]=1;
-        for(int i=1;i<=coins.size();i++){
-            for(int j=1;j<=amount;j++){
-                if(coins[i-1]<=j) cur[j]+=cur[j-coins[i-1]];
-            }
-        }
-        return cur[amount];
+    int change(int a, vector<int>& coins) {
+        vector<int> cur(a+1); cur[0]=1;
+        for(int n=1;n<=coins.size();n++)
+            for(int amount=1;amount<=a;amount++)
+                if(coins[n-1]<=amount) cur[amount]+=cur[amount-coins[n-1]];
+        return cur[a];
     }
 };
