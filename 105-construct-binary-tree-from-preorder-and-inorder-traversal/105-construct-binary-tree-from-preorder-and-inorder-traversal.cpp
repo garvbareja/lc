@@ -12,12 +12,12 @@
 class Solution {
 public:
     TreeNode* build(vector<int>& preorder,int ps,int pe,vector<int>& inorder,int is,int ie,unordered_map<int,int>& hash){
-        if(ps>pe || is>ie) return nullptr;
+        if(is>ie || ps>pe) return nullptr;
         int rootindex=hash[preorder[ps]];
-        int x=rootindex-is;
         TreeNode* root=new TreeNode(inorder[rootindex]);
-        root->left=build(preorder,ps+1,ps+x,inorder,is,rootindex-1,hash);
-        root->right=build(preorder,ps+x+1,pe,inorder,rootindex+1,ie,hash);
+        int leftelements=rootindex-is;
+        root->left=build(preorder,ps+1,ps+leftelements,inorder,is,rootindex-1,hash);
+        root->right=build(preorder,ps+leftelements+1,pe,inorder,rootindex+1,ie,hash);
         return root;
     }
     
