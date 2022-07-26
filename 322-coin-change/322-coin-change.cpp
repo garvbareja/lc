@@ -1,16 +1,20 @@
 class Solution {
 public:
-    int dfs(vector<int>& nums,int target,vector<int>& dp){
+    int dfs(vector<int>& coins,int target,int n,vector<vector<int>>& dp){
         if(!target) return 0;
-        if(dp[target]!=-1) return dp[target];
-        long res=INT_MAX;
-        for(int i=0;i<nums.size();i++) if(nums[i]<=target) res=min(res,(long)1+dfs(nums,target-nums[i],dp));
-        return dp[target]=res;
+        if(dp[n][target]!=-1) return dp[n][target];
+        if(n==1){
+            if(target%coins[0]) return dp[n][target]=INT_MAX-1;
+            else return dp[n][target]=target/coins[0];
+        }
+        if(coins[n-1]>target) return dp[n][target]=dfs(coins,target,n-1,dp);
+        else return dp[n][target]=min(1+dfs(coins,target-coins[n-1],n,dp),dfs(coins,target,n-1,dp));
     }
     
     int coinChange(vector<int>& coins, int amount) {
-        vector<int> dp(amount+1,-1);
-        int res=dfs(coins,amount,dp);
-        return res==INT_MAX?-1:res;
+        vector<vector<int>> dp(coins.size()+1,vector<int>(amount+1,-1));
+        int ans=dfs(coins,amount,coins.size(),dp);
+        if(ans==INT_MAX-1) return -1;
+        else return ans;
     }
 };
