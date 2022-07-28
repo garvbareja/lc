@@ -1,46 +1,29 @@
 class Solution {
 public:
-    vector<int> ans;
-    bool help(int v,vector<bool>& vis,vector<bool>& dfsvis,vector<bool>& safe,vector<vector<int>>& graph){
-        vis[v]=true; dfsvis[v]=true;
-        bool flag = true;
+    unordered_set<int> res;
+    bool cycle(vector<vector<int>>& graph,vector<bool> &vis,vector<bool> &dfsvis,int v){
+        vis[v]=true; dfsvis[v]=true; bool flag=false;
         for(int i=0;i<graph[v].size();i++){
-            if(!vis[graph[v][i]]){
-                if(!(help(graph[v][i],vis,dfsvis,safe,graph))){
-                    flag = false;
-                    break;
-                }
+            if(!vis[graph[v][i]] && !dfsvis[graph[v][i]]){
+                if(cycle(graph,vis,dfsvis,graph[v][i])) flag=true;
             }else{
-                if(dfsvis[graph[v][i]]){
-                    flag = false;
-                    break;
-                }else{
-                    if(!safe[graph[v][i]]){
-                        flag = false;
-                        break;
-                    }
+                if(dfsvis[graph[v][i]]) flag=true;
+                else{
+                    if(!res.count(graph[v][i])) flag=true;
                 }
             }
         }
-        if(flag){
-            safe[v]=true;
-            ans.push_back(v);
-        }else{
-            safe[v]=false;
-        }
         dfsvis[v]=false;
+        if(!flag) res.insert(v);
         return flag;
     }
     
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-        vector<bool> vis(graph.size());
-        vector<bool> dfsvis(graph.size());
-        vector<bool> safe(graph.size());
+        vector<bool> vis(graph.size()),dfsvis(graph.size());
         for(int i=0;i<graph.size();i++){
-            if(!vis[i]){
-                help(i,vis,dfsvis,safe,graph);
-            }
+            if(!vis[i]) cycle(graph,vis,dfsvis,i);
         }
+        vector<int> ans(res.begin(),res.end());
         sort(ans.begin(),ans.end());
         return ans;
     }
