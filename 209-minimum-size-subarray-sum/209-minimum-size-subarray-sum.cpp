@@ -1,16 +1,31 @@
 class Solution {
 public:
-    int minSubArrayLen(int target, vector<int>& nums) {
-        int i=0,j=0,cursum=0,res=INT_MAX;
+    bool possible(vector<int>& nums,int target,int window_size){
+        int cursum=0;
+        int i=0,j=0;
         while(i<nums.size()){
             cursum+=nums[i];
-            while(cursum>=target){
-                res=min(res,i-j+1);
-                cursum-=nums[j];
-                j++;
+            if(i-j+1==window_size){
+                if(cursum>=target) return true;
+                else{
+                    cursum-=nums[j];
+                    j++;
+                }
             }
             i++;
         }
-        return res==INT_MAX?0:res;
+        return false;
+    }
+    
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int low=1,high=nums.size(),mid,res=0;
+        while(low<=high){
+            mid=low+(high-low)/2;
+            if(possible(nums,target,mid)){
+                res=mid;
+                high=mid-1;
+            }else low=mid+1;
+        }
+        return res;
     }
 };
